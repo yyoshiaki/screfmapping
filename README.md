@@ -4,7 +4,7 @@
 
 screfmapping is a cell-labeling tool that facilitates the extraction of CD4+ T cells from the single-cell RNA-seq raw data of peripheral blood mononuclear cells (PBMCs) and maps them to our annotated clusterL1, L2 atlas (Link###). The Azimuth pipeline is employed for the extraction of CD4+ T cells, and Symphony mapping, which includes batch effect adjustment by Harmony, is used for mapping to our atlas.
 
-We've included an example analysis in example.R for your reference.
+We've included an example analysis in example.R for your reference.  
 Below, we will provide an overview of the function.
 
 ## Function
