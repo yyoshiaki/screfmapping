@@ -11,7 +11,8 @@ setwd('/home/rstudio/autoimmune_10x')
 source('/screfmapping/ref_mapping_seuratobj.R')
 source('/screfmapping/utils_seurat.R')
 
-## ----Load_the_reference---------------------------------------------------------------------------
+## ----Load　reference---------------------------------------------------------------------------
+# Reference for CD4T cells are included in Docker repo. No need to modify this section for CD4T analysis.
 # Azimuth
 reference <- LoadReference(path = "/screfmapping/data/Azimuth/human_pbmc_v1.0.0")
 # Symphony
