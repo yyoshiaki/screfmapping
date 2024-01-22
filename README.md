@@ -1,11 +1,13 @@
 # screfmapping
 
+
 ## Overview
 
 screfmapping is a pipeline that facilitates the extraction of CD4+ T cells from the single-cell RNA-seq raw data of peripheral blood mononuclear cells (PBMCs) and maps them to our annotated clusterL1, L2 atlas. The Azimuth pipeline is employed to extract CD4+ T cells, and Symphony mapping, which includes batch effect adjustment by Harmony, is used for mapping to our atlas.
 
 We've included an example analysis in example.R.  
 Below, we provide an overview of the function.
+
 
 ## Function
 
@@ -28,6 +30,7 @@ reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L
 docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmapping:0.0.1 Rscript example.R
 ```
 
+
 ## Output
 ### extract_cells_seuratobj
 - ${prefix}_CD4T_MetaData.rds
@@ -36,6 +39,14 @@ docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmappi
 ### reference_mapping_seuratobj
 - ${prefix}_predict_clusterL1L2_Reference_Mapping.pdf
 - ${prefix}_Reference_Mapping.csv : Symphony result
+
+
+## Adjustment
+### The number of neighbors (k) to use when finding anchors
+
+Our "screfmapping" is expected to be used for a PBMC dataset. However, some people may want to use it for a CD4+ T cells enriched dataset. In such cases, we have noticed that a proportion of CD4+ T cells tend to be misannotated as non-CD4+ T cells (approximately 4%). To address this issue, we optimized the `k.anchor` values. In conclusion, the `FindTransferAnchors` in the `extract_cells` function should be conducted with lower `k.anchor` values (for example, `k.anchor = 3`, compared to the default `k.anchor = 5`).
+
+
 
 ## Citation
 
