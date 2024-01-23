@@ -48,7 +48,7 @@ Our "screfmapping" is expected to be used for PBMC datasets. However, some peopl
 To address this issue, we optimized the `k.anchor` values. In conclusion, the `FindTransferAnchors` in the `extract_cells_seuratobj` function should be conducted with lower `k.anchor` values (for example, `k.anchor = 3`, compared to the default `k.anchor = 5`) in CD4+ T cell-enriched datasets.  
 
   
-As just a quick note, please modify the `ref_mapping_seuratobj.R` file if you want to analyze a CD4+ T cells enriched dataset. The option for `k.anchor` will be incorporated in a future revision.
+As just a quick note, please modify the `ref_mapping_seuratobj.R` file if you want to analyze CD4+ T cell-enriched datasets. The option for `k.anchor` will be incorporated in a future revision.
 
 
 ```
