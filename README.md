@@ -71,5 +71,6 @@ anchors <- FindTransferAnchors(reference = reference$map,
 
 ## Citation
 
-Yoshiaki Yasumizu, Daiki Takeuchi, Reo Morimoto, Yusuke Takeshima, Tatsusada Okuno, Makoto Kinoshita, Takayoshi Morita, Yasuhiro Kato, Min Wang, Daisuke Motooka, Daisuke Okuzaki, Yamami Nakamura, Norihisa Mikami, Masaya Arai, Xuan Zhang, Atsushi Kumanogoh, Hideki Mochizuki, Naganari Ohkura, and Shimon Sakaguchi, "Single-cell transcriptome landscape of circulating CD4+ T cell populations in autoimmune diseases", Cell Genomics, 2024.  
+Yasumizu, Y., Takeuchi, D., Morimoto, R., Takeshima, Y., Okuno, T., Kinoshita, M., Morita, T., Kato, Y., Wang, M., Motooka, D., et al. (2024). Single-cell transcriptome landscape of circulating CD4+ T cell populations in autoimmune diseases. Cell Genomics.  
 [https://doi.org/10.1016/j.xgen.2023.100473](https://doi.org/10.1016/j.xgen.2023.100473)
+
