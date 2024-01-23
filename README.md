@@ -44,7 +44,9 @@ docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmappi
 ## Adjustment
 ### The number of neighbors (k) to use when finding anchors
 
-Our "screfmapping" is expected to be used for a PBMC dataset. However, some people may want to use it for a CD4+ T cells enriched dataset. In such cases, we have noticed that a proportion of CD4+ T cells tend to be misannotated as non-CD4+ T cells (approximately 4%). To address this issue, we optimized the `k.anchor` values. In conclusion, the `FindTransferAnchors` in the `extract_cells_seuratobj` function should be conducted with lower `k.anchor` values (for example, `k.anchor = 3`, compared to the default `k.anchor = 5`).  
+Our "screfmapping" is expected to be used for a PBMC dataset. However, some people may want to use it for a CD4+ T cells enriched dataset. In such cases, we have noticed that a proportion of CD4+ T cells tend to be misannotated as non-CD4+ T cells (approximately 4%).  
+To address this issue, we optimized the `k.anchor` values. In conclusion, the `FindTransferAnchors` in the `extract_cells_seuratobj` function should be conducted with lower `k.anchor` values (for example, `k.anchor = 3`, compared to the default `k.anchor = 5`).  
+  
 As just a quick note, please modify the `ref_mapping_seuratobj.R` file if you want to analyze a CD4+ T cells enriched dataset. The option for `k.anchor` will be incorporated in a future revision.
 
 
