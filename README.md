@@ -32,7 +32,7 @@ docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmappi
 
 
 ## Referance data in example.R
-If you want to use the `ref_Reference_Mapping_20220525.RData` in example.R, please download [here](https://doi.org/10.6084/m9.figshare.25052648)
+If you want to use the `ref_Reference_Mapping_20220525.RData` in example.R, please download it from [here](https://doi.org/10.6084/m9.figshare.25052648). However, users who use screfmapping in the docker environment do not need to download it.
 
 
 ## Output
