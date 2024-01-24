@@ -25,7 +25,7 @@ reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L
 
 
 ## Our annotated reference data
-Please download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648) and place it in the `/screfmapping/data/` directory.　　
+Please download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648) and place it in the `/screfmapping/data/` directory.　  
 Users will need this file for `ref` in the `reference_mapping_seuratobj` function.
 
 
