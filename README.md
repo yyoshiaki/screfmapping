@@ -3,9 +3,9 @@
 
 ## Overview
 
-screfmapping is a pipeline that facilitates the extraction of CD4+ T cells from the single-cell RNA-seq raw data of peripheral blood mononuclear cells (PBMCs) and maps them to our annotated clusterL1, L2 atlas. The Azimuth pipeline is employed to extract CD4+ T cells, and Symphony mapping, which includes batch effect adjustment by Harmony, is used for mapping to our atlas.
+"screfmapping" is a pipeline that facilitates the extraction of CD4+ T cells from the single-cell RNA-seq raw data of peripheral blood mononuclear cells (PBMCs) and maps them to our annotated clusterL1, L2 atlas. The Azimuth pipeline is employed to extract CD4+ T cells, and Symphony mapping, which includes batch effect adjustment by Harmony, is used for mapping to our atlas.
 
-We've included an example analysis in example.R.  
+We've included an example analysis in `example.R`.  
 Below, we provide an overview of the function.
 
 
@@ -24,16 +24,18 @@ reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L
 ```
 
 
+## Our annotated reference data
+Please download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648) and place it in the `/screfmapping/data/` directory.　　
+Users will need this file for `ref` in the `reference_mapping_seuratobj` function.
+
+
 ## Rscript
 
 ```
 docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmapping:0.0.1 Rscript example.R
 ```
 
-  
-## Referance data in example.R
-If you want to use the `ref_Reference_Mapping_20220525.RData` in example.R, please download it from [here](https://doi.org/10.6084/m9.figshare.25052648). However, users who use screfmapping in the docker environment do not need to download it.
-  
+
   
 ## Output
 ### extract_cells_seuratobj
