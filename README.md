@@ -23,20 +23,16 @@ reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L
                             refix = prefix)          # output_file_path
 ```
 
-
-## Our annotated reference data
-Please download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648) and place it in the `/screfmapping/data/` directory.　  
-Users will need this file for `ref` in the `reference_mapping_seuratobj` function.
-
-
 ## Rscript
 
 ```
 docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmapping:0.0.1 Rscript example.R
 ```
-
-
   
+## Pre-annotated reference data
+Required files for CD4T classifications are included in the Docker image (Docker hub: yyasumizu/screfmapping:0.0.1). Users can also download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648). In that case, place it in the `/screfmapping/data/` directory.　  
+Users will need this file for `ref` in the `reference_mapping_seuratobj` function.
+
 ## Output
 ### extract_cells_seuratobj
 - ${prefix}_CD4T_MetaData.rds
