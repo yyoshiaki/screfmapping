@@ -20,7 +20,7 @@ extract_cells_seuratobj(query = q,                   # query_SeuratObject
 # 2nd step, label transfer
 reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L2_data
                             query_obj = query_obj,   # extracted_CD4T_SeuratObject_with or without_metadata
-                            refix = prefix)          # output_file_path
+                            prefix = prefix)          # output_file_path
 ```
 
 ## Rscript
