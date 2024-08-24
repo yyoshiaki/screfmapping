@@ -41,9 +41,7 @@ q@meta.data['log_umi'] <- log10(q$nCount_RNA)
 ## ----extraction of CD4T-----------------------------------------------------------------------------
 # if your seurat object contains only CD4T, skip this step
 q <- extract_cells_seuratobj(q, reference, prefix)
-write.csv(q@meta.data[, c('predicted.celltype.l1.score', 'predicted.celltype.l1',
-                'predicted.celltype.l2.score', 'predicted.celltype.l2',
-                'predicted.celltype.l3.score', 'predicted.celltype.l3')],
+write.csv(q@meta.data[, c('predicted.celltype.l1.score', 'predicted.celltype.l1')],
       file = paste0(prefix, '_Azimuth.csv'))
 
 # load extracted CD4T
