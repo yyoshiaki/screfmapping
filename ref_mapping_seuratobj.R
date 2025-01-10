@@ -153,7 +153,7 @@ extract_cells_seuratobj <- function(query, reference, prefix){
   #        group.by = predicted.id,
   #        pt.size = 0) + NoLegend()
   
-  genes <- c("CD3E", "CD4", "CD8A", "FOXP3", "IL7R", "CD74")
+  genes <- c("CD3E", "CD4", "CD8A", "FOXP3", "IL7R", "CST3", 'MS4A1')
   
   ## ----DotPlot for finding CD4+Tcell----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   options(repr.plot.width = 10, repr.plot.height = 8)
@@ -161,7 +161,7 @@ extract_cells_seuratobj <- function(query, reference, prefix){
   DotPlot(object = query,
           features = genes,
           group.by = predicted.id) + RotatedAxis()
-  ggsave(paste0(prefix, "_check_dotplot_CD4T_extraction.pdf"),
+  ggsave(paste0(prefix, "_check_dotplot_extraction.pdf"),
          width = 10,
          height = 10)
   
@@ -174,7 +174,7 @@ extract_cells_seuratobj <- function(query, reference, prefix){
               ncol = 2,
               raster = TRUE)
   
-  ggsave(paste0(prefix, "_check_featureplot_CD4T_extraction.pdf"),
+  ggsave(paste0(prefix, "_check_featureplot_extraction.pdf"),
          width = 10,
          height = 15)
 
@@ -199,6 +199,102 @@ extract_cells_seuratobj <- function(query, reference, prefix){
   } else {
     print("No CD4T cell was detected in the sample.")
   }
+
+  if (length(query@meta.data[query@meta.data['predicted.celltype.l1'] == "CD8 T"]) > 0 ) {
+    pbmc_CD8T <- subset(query,
+                        predicted.celltype.l1 == "CD8 T")
+    
+    pbmc_CD8T.meta.data <- pbmc_CD8T@meta.data
+    pbmc_CD8T.meta.data <- pbmc_CD8T.meta.data
+    
+    pbmc_CD8T <- GetAssayData(object = pbmc_CD8T,
+                              slot = "counts")
+    
+    saveRDS(pbmc_CD8T.meta.data,
+            file = paste0(prefix, "_CD8T_MetaData.rds"))
+    
+    saveRDS(pbmc_CD8T,
+            file = paste0(prefix, "_CD8T_AssayData.rds"))
+  } else {
+    print("No CD8T cell was detected in the sample.")
+  }
+
+  if (length(query@meta.data[query@meta.data['predicted.celltype.l1'] == "B"]) > 0 ) {
+    pbmc_B <- subset(query,
+                        predicted.celltype.l1 == "B")
+    
+    pbmc_B.meta.data <- pbmc_B@meta.data
+    pbmc_B.meta.data <- pbmc_B.meta.data
+    
+    pbmc_B <- GetAssayData(object = pbmc_B,
+                              slot = "counts")
+    
+    saveRDS(pbmc_B.meta.data,
+            file = paste0(prefix, "_B_MetaData.rds"))
+    
+    saveRDS(pbmc_B,
+            file = paste0(prefix, "_B_AssayData.rds"))
+  } else {
+    print("No B cell was detected in the sample.")
+  }
+
+  if (length(query@meta.data[query@meta.data['predicted.celltype.l1'] == "NK"]) > 0 ) {
+    pbmc_NK <- subset(query,
+                        predicted.celltype.l1 == "NK")
+    
+    pbmc_NK.meta.data <- pbmc_NK@meta.data
+    pbmc_NK.meta.data <- pbmc_NK.meta.data
+    
+    pbmc_NK <- GetAssayData(object = pbmc_NK,
+                              slot = "counts")
+    
+    saveRDS(pbmc_NK.meta.data,
+            file = paste0(prefix, "_NK_MetaData.rds"))
+    
+    saveRDS(pbmc_NK,
+            file = paste0(prefix, "_NK_AssayData.rds"))
+  } else {
+    print("No NK cell was detected in the sample.")
+  }
+
+  if (length(query@meta.data[query@meta.data['predicted.celltype.l1'] == "DC"]) > 0 ) {
+    pbmc_DC <- subset(query,
+                        predicted.celltype.l1 == "DC")
+    
+    pbmc_DC.meta.data <- pbmc_DC@meta.data
+    pbmc_DC.meta.data <- pbmc_DC.meta.data
+    
+    pbmc_DC <- GetAssayData(object = pbmc_DC,
+                              slot = "counts")
+    
+    saveRDS(pbmc_DC.meta.data,
+            file = paste0(prefix, "_DC_MetaData.rds"))
+    
+    saveRDS(pbmc_DC,
+            file = paste0(prefix, "_DC_AssayData.rds"))
+  } else {
+    print("No DC cell was detected in the sample.")
+  }
+
+  if (length(query@meta.data[query@meta.data['predicted.celltype.l1'] == "Mono"]) > 0 ) {
+    pbmc_Mono <- subset(query,
+                        predicted.celltype.l1 == "Mono")
+    
+    pbmc_Mono.meta.data <- pbmc_Mono@meta.data
+    pbmc_Mono.meta.data <- pbmc_Mono.meta.data
+    
+    pbmc_Mono <- GetAssayData(object = pbmc_Mono,
+                              slot = "counts")
+    
+    saveRDS(pbmc_Mono.meta.data,
+            file = paste0(prefix, "_Mono_MetaData.rds"))
+    
+    saveRDS(pbmc_Mono,
+            file = paste0(prefix, "_Mono_AssayData.rds"))
+  } else {
+    print("No Mono cell was detected in the sample.")
+  }
+
   return(query)
 }
 
