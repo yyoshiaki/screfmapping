@@ -53,12 +53,6 @@ extract_cells_seuratobj <- function(query, reference, prefix){
   
   
   ## ----Transfer cell type labels and impute protein expression--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  refdata <- lapply(X = "celltype.l1",
-                    function(x) {
-                      reference$map[[x, drop = TRUE]]
-                    })
-  names(x = refdata) <- "celltype.l1"
-
   annotations <- c("celltype.l1", "celltype.l2", "celltype.l3")
 
   refdata <- lapply(X = annotations, function(x) {
@@ -412,6 +406,16 @@ reference_mapping_seuratobj <- function(ref, query_obj, prefix, genes=c("CD3E", 
   ## ----output files---------------------------------------------------------------------------------
   write.csv(cbind(queryL1@meta.data[c("clusterL1", "clusterL1_prob")], queryL2@meta.data[c("clusterL2", "clusterL2_prob")]),
             file = paste0(prefix, "_Reference_Mapping.csv"),
+            row.names = TRUE,
+            quote = FALSE)
+  queryL1_metadata <- queryL1@reductions[["umap"]]@cell.embeddings
+  colnames(queryL1_metadata)[colnames(queryL1_metadata) == "umap_1"] <- "clusterL1_umap_1"
+  colnames(queryL1_metadata)[colnames(queryL1_metadata) == "umap_2"] <- "clusterL1_umap_2"
+  queryL2_metadata <- queryL2@reductions[["umap"]]@cell.embeddings
+  colnames(queryL2_metadata)[colnames(queryL2_metadata) == "umap_1"] <- "clusterL2_umap_1"
+  colnames(queryL2_metadata)[colnames(queryL2_metadata) == "umap_2"] <- "clusterL2_umap_2"
+  write.csv(cbind(queryL1_metadata, queryL2_metadata),
+            file = paste0(prefix, "_Reference_Mapping_umap_embeddings.csv"),
             row.names = TRUE,
             quote = FALSE)
 }

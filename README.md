@@ -18,9 +18,12 @@ extract_cells_seuratobj(query = q,                   # query_SeuratObject
                         prefix = prefix)             # output_file_path
 
 # 2nd step, label transfer
-reference_mapping_seuratobj(ref = ref,               # our_annotated_clusterL1,L2_data
-                            query_obj = query_obj,   # extracted_CD4T_SeuratObject_with or without_metadata
-                            prefix = prefix)          # output_file_path
+reference_mapping_seuratobj(ref = ref,                # our_annotated_clusterL1,L2_data
+                            query_obj = query_obj,    # extracted_CD4T_SeuratObject_with or without_metadata
+                            prefix = prefix           # output_file_path
+                            genes = c('CD3E', 'CD4'), # gene names to visualize (optional)
+                            vars.batch = c('batch')   # batch category for symphony (optional) 
+)
 ```
 
 ## Rscript
