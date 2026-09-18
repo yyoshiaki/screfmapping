@@ -39,12 +39,11 @@ The pipeline above is the R implementation (Seurat + SCTransform + Symphony) for
 atlas. A Python implementation for the AnnData references, including the B cell atlas, is in
 [`python/`](python/README.md) with an end-to-end notebook.
 
-If you map with `symphonypy`, read `python/README.md` first: the AnnData references were built
-with `regress_out([total_counts, pct_counts_mt, S_score, G2M_score])` before scaling, so their
-`var['mean']` / `var['std']` are residual statistics and the query has to be residualised with the
-reference's own coefficients (`varm['regress_beta']`). Handing `symphonypy` a plain `log1p` query
-silently degrades label transfer (58% vs an 87% ceiling on reference self-mapping). The R route on
-this page is not affected: SCTransform `scale.data` is computed the same way for reference and
+If you map with `symphonypy`, read `python/README.md` first. The AnnData references were built
+with `regress_out([total_counts, pct_counts_mt, S_score, G2M_score])` before scaling, so the query
+has to be put through the same covariate regression using the coefficients the reference ships
+(`varm['regress_beta']`). `python/screfmapping_symphonypy.py` does this for you. The R route on
+this page is unaffected: SCTransform `scale.data` is computed the same way for reference and
 query.
 
 ## Output

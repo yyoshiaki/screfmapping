@@ -14,45 +14,41 @@ for the AnnData/scanpy references of the same atlases.
 
 The two routes are independent implementations; use one or the other, not a mix.
 
-## The one thing you must not skip
+## Preprocess the query the way the reference was built
 
-Both atlases were embedded as
+Symphony projects a query by scaling it with the reference's per-gene statistics and applying the
+reference's PCA loadings, so the query has to go through the same transformations as the
+reference. These atlases were built as
 
 ```
 normalize_total(target_sum=1e4) -> log1p
   -> regress_out([total_counts, pct_counts_mt, S_score, G2M_score]) -> scale -> PCA -> Harmony
 ```
 
-so `reference.var['mean']` and `reference.var['std']` are statistics of the **regression
-residuals**, not of log1p expression. `symphonypy` scales the query with those statistics, so a
-query that is only `log1p`-normalised is projected with a constant offset. The query must be
-residualised with the reference's own coefficients, stored in `reference.varm['regress_beta']`.
-The reference must also carry `reference.uns['harmony']`; without it `symphonypy` falls back to a
-soft k-means cache and loses roughly 30 points of label concordance.
+meaning `reference.var['mean']` and `['std']` describe the data **after** that covariate
+regression. A query that stops at `log1p` sits on a different scale, and the projection carries
+the difference through to the transferred labels.
 
-Self-mapping of reference cells (kNN-5 `cluster_L2` agreement, 6,000 held-out reference cells
-re-mapped as a query, own cell excluded from the neighbourhood):
+The references therefore carry the coefficients they were regressed with
+(`varm['regress_beta']`), the Symphony compression object (`uns['harmony']`) and the recipe
+itself (`uns['symphony_query_preprocessing']`). `prepare_query()` replays all of it on your data.
+The notebook runs the whole flow on a public dataset and ends by showing where the same cells
+land when this step is skipped.
 
-| query preprocessing | reference | B cells | CD4+ T cells |
-|---|---|---|---|
-| stored embedding (ceiling) | - | 87.1% | 81.6% |
-| `log1p` only | no `uns['harmony']` | 57.7% | 49.1% |
-| `log1p` only, CP100K | no `uns['harmony']` | 71.0% | - |
-| residuals | no `uns['harmony']` | 55.9% | - |
-| **residuals** | **`uns['harmony']`, `key='sample'`** | **84.8%** | **77.5%** |
-| residuals | `uns['harmony']`, `key=None` | 81.4% | 72.6% |
-
-This is a property of how the references were normalised, not a change to them: PCA loadings,
-Harmony embedding, UMAP and labels are the published ones.
+None of this changes the references: PCA loadings, Harmony embedding, UMAP and labels are the
+published ones.
 
 ## Files
 
-- `symphonypy_reference_mapping.ipynb` - end-to-end notebook: raw counts to labels, per-cell
-  confidence and UMAP, with the sanity checks worth looking at before trusting the labels.
+- `symphonypy_reference_mapping.ipynb` - end-to-end notebook on 10x PBMC 3k: query preprocessing,
+  covariate check, mapping, labels on the atlas UMAP, marker genes, and the effect of skipping
+  the covariate regression.
 - `screfmapping_symphonypy.py` - `prepare_query()` (the recipe above) and `map_query()`
   (`map_embedding` -> `transfer_labels_kNN` -> `per_cell_confidence` -> `ingest`).
-- `data/regev_lab_cell_cycle_genes.txt` - cell-cycle gene list for `S_score` / `G2M_score`
-  (first 43 entries are S phase, the remainder G2/M).
+- `data/regev_lab_cell_cycle_genes.txt` - cell-cycle gene list for `S_score` / `G2M_score` (first
+  43 entries are S phase, the remainder G2/M). From Tirosh et al., *Science* (2016), in the form
+  distributed with the scanpy cell-cycle tutorial; vendored here because that upstream copy is no
+  longer online.
 
 ## Usage
 
@@ -78,13 +74,14 @@ query.obsm["X_umap"]         # published reference UMAP coordinates
 Raw counts in `X`, human gene symbols in `var_names` (duplicate symbols are summed), one row per
 cell, already restricted to the lineage of the reference. Extract B cells or CD4+ T cells upstream
 with Azimuth or CellTypist; the mapping step does not filter lineages for you. A library/batch
-column in `obs` is recommended and passed as `key=`; a single-library query can use `key=None`.
+column in `obs` is recommended and passed as `key=`, which lets Symphony correct the query batches
+against the reference; a single-library query uses `key=None`.
 
-The regression coefficients are only transferable if `total_counts`, `pct_counts_mt`, `S_score`
-and `G2M_score` are on the same scale as in the reference. The reference summary is stored in
-`reference.uns['symphony_query_preprocessing']['reference_covariate_summary']`, and the notebook
-prints both side by side. Very shallow or very deep libraries will be over- or under-corrected;
-check `symphony_dist` before trusting the labels.
+The regression coefficients transfer cleanly when `total_counts`, `pct_counts_mt`, `S_score` and
+`G2M_score` sit in a range similar to the reference. The reference summary is stored in
+`reference.uns['symphony_query_preprocessing']['reference_covariate_summary']` and the notebook
+prints both side by side. Reference genes missing from the query are held at the reference mean,
+so a query with fewer genes still maps; `prepare_query()` reports how many were found.
 
 ## References
 
@@ -103,4 +100,4 @@ symphonypy >= 0.2.2
 anndata, numpy, pandas, scipy, scikit-learn, matplotlib
 ```
 
-Validated with scanpy 1.11.4, symphonypy 0.2.2, anndata 0.12.2, numpy 2.3.5.
+Validated with scanpy 1.11.4, symphonypy 0.2.2, anndata 0.12.2.
