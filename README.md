@@ -33,6 +33,20 @@ docker run --rm -it -v ${PWD}:/home/rstudio/autoimmune_10x  yyasumizu/screfmappi
 Required files for CD4T classifications are included in the Docker image (Docker hub: yyasumizu/screfmapping:0.0.1). Users can also download the `ref_Reference_Mapping_20220525.RData` file from [here](https://doi.org/10.6084/m9.figshare.25052648). In that case, place it in the `/screfmapping/data/` directory.　  
 Users will need this file for `ref` in the `reference_mapping_seuratobj` function.
 
+## Python route (symphonypy)
+
+The pipeline above is the R implementation (Seurat + SCTransform + Symphony) for the CD4+ T cell
+atlas. A Python implementation for the AnnData references, including the B cell atlas, is in
+[`python/`](python/README.md) with an end-to-end notebook.
+
+If you map with `symphonypy`, read `python/README.md` first: the AnnData references were built
+with `regress_out([total_counts, pct_counts_mt, S_score, G2M_score])` before scaling, so their
+`var['mean']` / `var['std']` are residual statistics and the query has to be residualised with the
+reference's own coefficients (`varm['regress_beta']`). Handing `symphonypy` a plain `log1p` query
+silently degrades label transfer (58% vs an 87% ceiling on reference self-mapping). The R route on
+this page is not affected: SCTransform `scale.data` is computed the same way for reference and
+query.
+
 ## Output
 ### extract_cells_seuratobj
 - ${prefix}_CD4T_MetaData.rds
