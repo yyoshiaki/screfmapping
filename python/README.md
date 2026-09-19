@@ -40,9 +40,9 @@ published ones.
 
 ## Files
 
-- `symphonypy_reference_mapping.ipynb` - end-to-end notebook on 10x PBMC 3k: query preprocessing,
-  covariate check, mapping, labels on the atlas UMAP, marker genes, and the effect of skipping
-  the covariate regression.
+- `symphonypy_reference_mapping.ipynb` - end-to-end notebook on 10x 10k PBMC (v3): isolating the
+  B cells, query preprocessing, covariate check, mapping, labels on the atlas UMAP, marker genes,
+  and the effect of skipping the covariate regression.
 - `screfmapping_symphonypy.py` - `prepare_query()` (the recipe above) and `map_query()`
   (`map_embedding` -> `transfer_labels_kNN` -> `per_cell_confidence` -> `ingest`).
 - `data/regev_lab_cell_cycle_genes.txt` - cell-cycle gene list for `S_score` / `G2M_score` (first
@@ -78,7 +78,11 @@ column in `obs` is recommended and passed as `key=`, which lets Symphony correct
 against the reference; a single-library query uses `key=None`.
 
 The regression coefficients transfer cleanly when `total_counts`, `pct_counts_mt`, `S_score` and
-`G2M_score` sit in a range similar to the reference. The reference summary is stored in
+`G2M_score` sit in a range similar to the reference - sequencing depth is the one to watch, more
+than gene coverage. Re-mapping reference cells with the ~280 genes an older annotation lacks held
+at the reference mean barely changes the result (98% -> 94% label recovery), whereas a query
+several times shallower than the reference is corrected outside the range the coefficients were
+fitted on and is visibly pulled together on the atlas UMAP. The reference summary is stored in
 `reference.uns['symphony_query_preprocessing']['reference_covariate_summary']` and the notebook
 prints both side by side. Reference genes missing from the query are held at the reference mean,
 so a query with fewer genes still maps; `prepare_query()` reports how many were found.
