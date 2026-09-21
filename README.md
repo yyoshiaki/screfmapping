@@ -36,8 +36,8 @@ Users will need this file for `ref` in the `reference_mapping_seuratobj` functio
 ## Python route (symphonypy)
 
 The pipeline above is the R implementation (Seurat + SCTransform + Symphony) for the CD4+ T cell
-atlas. A Python implementation for the AnnData references, including the B cell atlas, is in
-[`python/`](python/README.md) with an end-to-end notebook.
+atlas. A Python implementation is in [`python/`](python/README.md), covering both the CD4+ T cell
+and B cell atlases, with an end-to-end notebook for each.
 
 If you map with `symphonypy`, read `python/README.md` first. The AnnData references were built
 with `regress_out([total_counts, pct_counts_mt, S_score, G2M_score])` before scaling, so the query
