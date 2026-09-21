@@ -57,10 +57,11 @@ published ones.
   dot plot per state, and the effect of skipping the covariate regression. The two differ only in
   the reference, the cluster selection markers and the marker panel.
 
-  The marker UMAPs name the percentage of query cells positive for each gene, because that is
-  usually what makes a panel look thin: in a healthy donor the atypical B, interferon-high B, Treg
-  and Temra states are a few percent of their lineage, so their markers are scattered dots on a
-  UMAP however well the mapping worked. The dot plot is the fair read for those.
+  The marker panels are plain `sc.pl.umap` calls on the query. Markers of the states that are
+  rare in a healthy donor - atypical B, interferon-high B, Treg, Temra - are left to the dot plot:
+  those states are a few percent of their lineage, so their markers are scattered dots on a UMAP
+  however well the mapping worked, while the dot plot shows mean expression and percent positive
+  per state.
 
   Both atlases were built from 5'-end libraries with paired receptor sequencing, which is why the
   notebooks use a 5' query: on that dataset essentially every reference gene is present
