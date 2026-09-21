@@ -52,10 +52,15 @@ published ones.
 ## Files
 
 - `cd4t_reference_mapping.ipynb`, `bcell_reference_mapping.ipynb` - end-to-end notebooks on 10x
-  10k PBMC (v3), one per lineage, with their outputs kept: isolating the lineage, query
-  preprocessing, covariate check, mapping, labels on the atlas UMAP, marker genes, and the effect
-  of skipping the covariate regression. The two differ only in the reference, the cluster
-  selection markers and the marker panel.
+  10k PBMC (5' v2), one per lineage, with their outputs kept: isolating the lineage, query
+  preprocessing, covariate check, mapping, labels on the atlas UMAP, signature scores, a dot plot
+  of individual markers, and the effect of skipping the covariate regression. The two differ only
+  in the reference, the cluster selection markers and the signature panel.
+
+  Both atlases were built from 5'-end libraries with paired receptor sequencing, which is why the
+  notebooks use a 5' query: on that dataset essentially every reference gene is present
+  (1,608/1,608 for B, 1,270/1,271 for CD4+ T) and the per-cell distances to the reference are
+  markedly lower than for a 3' library of similar size.
 - `screfmapping_symphonypy.py` - `prepare_query()` (the recipe above) and `map_query()`
   (`map_embedding` -> `transfer_labels_kNN` -> `per_cell_confidence` -> `ingest`).
 - `data/regev_lab_cell_cycle_genes.txt` - cell-cycle gene list for `S_score` / `G2M_score` (first
