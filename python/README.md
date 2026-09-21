@@ -53,9 +53,14 @@ published ones.
 
 - `cd4t_reference_mapping.ipynb`, `bcell_reference_mapping.ipynb` - end-to-end notebooks on 10x
   10k PBMC (5' v2), one per lineage, with their outputs kept: isolating the lineage, query
-  preprocessing, covariate check, mapping, labels on the atlas UMAP, signature scores, a dot plot
-  of individual markers, and the effect of skipping the covariate regression. The two differ only
-  in the reference, the cluster selection markers and the signature panel.
+  preprocessing, covariate check, mapping, labels on the atlas UMAP, marker-gene expression, a
+  dot plot per state, and the effect of skipping the covariate regression. The two differ only in
+  the reference, the cluster selection markers and the marker panel.
+
+  The marker UMAPs name the percentage of query cells positive for each gene, because that is
+  usually what makes a panel look thin: in a healthy donor the atypical B, interferon-high B, Treg
+  and Temra states are a few percent of their lineage, so their markers are scattered dots on a
+  UMAP however well the mapping worked. The dot plot is the fair read for those.
 
   Both atlases were built from 5'-end libraries with paired receptor sequencing, which is why the
   notebooks use a 5' query: on that dataset essentially every reference gene is present
